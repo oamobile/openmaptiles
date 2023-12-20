@@ -19,7 +19,7 @@ services:
     networks:
       - postgres
     ports:
-      - "${PGPORT:-5432}:${PGPORT:-5432}"
+      - "2345"
     env_file: .env
     environment:
       # postgress container uses old variable names
