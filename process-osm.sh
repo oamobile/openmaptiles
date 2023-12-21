@@ -121,7 +121,7 @@ fi
 
 echo " "
 echo "-------------------------------------------------------------------------------------"
-if [[ import_sql -eq 1 ]] 
+if [[ generate_tiles -eq 1 ]] 
 then
 	echo "====> : Start generating MBTiles (containing gzipped MVT PBF) using PostGIS. "
 	sudo make generate-tiles-pg
