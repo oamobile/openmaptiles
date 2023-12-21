@@ -66,6 +66,19 @@ case $yn1 in
 esac
 done
 
+
+setup_tile_svr=0
+while true; do
+read -p "Setup docker tile server (first install only)? (y/n) " yn1
+case $yn1 in
+        y ) setup_tile_svr=1
+                break;;
+        n ) setup_tile_svr=0
+                break;;
+        * ) echo invalid response;;
+esac
+done
+
 echo " "
 echo "====> : Restarting PostgreSQL"
 sudo systemctl restart postgresql
@@ -129,5 +142,12 @@ else
 	echo "====> : SKIPPING generating tiles"
 fi
 
-
-
+echo " "
+echo "-------------------------------------------------------------------------------------"
+if [[ setup_tile_svr -eq 1 ]] 
+then
+	echo "====> : Start docker tile server. "
+	sudo docker run --restart=always -it -d -v /home/ubuntu/openmaptiles/data:/data -p 8080:8080 maptiler/tileserver-gl
+else
+	echo "====> : SKIPPING setting up docker tile server"
+fi
