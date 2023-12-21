@@ -72,15 +72,15 @@ sudo systemctl restart postgresql
 
 echo " "
 echo "====> : Removing /data files"
-sudo rm *.osm
-sudo rm *.bbox
+sudo rm -f *.osm
+sudo rm -f *.bbox
 
 echo " "
 echo "-------------------------------------------------------------------------------------"
 if [[ import_osm -eq 1 ]] 
 then
 	echo "====> : Start importing OpenStreetMap data: {area} -> imposm3[./build/mapping.yaml] -> PostgreSQL"
-	#sudo make import-osm
+	sudo make import-osm
 else
 	echo "====> : SKIPPING importing OpenStreetMap data"
 fi
@@ -91,7 +91,7 @@ echo "--------------------------------------------------------------------------
 if [[ import_wiki -eq 1 ]] 
 then
 	echo "====> : Start importing Wikidata: Wikidata Query Service -> PostgreSQL"
-	#sudo make import-wikidata
+	sudo make import-wikidata
 else
 	echo "====> : SKIPPING importing Wiki data"
 fi
@@ -102,7 +102,7 @@ echo "--------------------------------------------------------------------------
 if [[ create_boundary -eq 1 ]] 
 then
 	echo "====> : Compute bounding box for tile generation"
-	#sudo make generate-bbox-file
+	sudo make generate-bbox-file
 else
 	echo "====> : SKIPPING calculating boundary box"
 fi
@@ -113,7 +113,7 @@ echo "--------------------------------------------------------------------------
 if [[ import_sql -eq 1 ]] 
 then
 	echo "====> : Start SQL postprocessing:  ./build/sql/* -> PostgreSQL "
-	#sudo make import-sql
+	sudo make import-sql
 else
 	echo "====> : SKIPPING importing to SQL"
 fi
@@ -124,7 +124,7 @@ echo "--------------------------------------------------------------------------
 if [[ import_sql -eq 1 ]] 
 then
 	echo "====> : Start generating MBTiles (containing gzipped MVT PBF) using PostGIS. "
-	#sudo make generate-tiles-pg
+	sudo make generate-tiles-pg
 else
 	echo "====> : SKIPPING generating tiles"
 fi
